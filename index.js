@@ -8,7 +8,7 @@ const httpServer = http.createServer();
 
 const websocketServer = new webSocketServer({ "httpServer": httpServer })
 
-const PORT = 8080;
+const PORT = process.argv[2] || 8080; // pick the port passed in the env variables
 httpServer.listen(8080, () => console.log(`Listening on port ${PORT}`))
 
 let connection = null // global variable for full duplex connection
@@ -17,6 +17,7 @@ websocketServer.on("request", request => {
     connection = request.accept(null, request.origin)
     connection.on("message", data => {
         console.log(`Message ${data.utf8Data} Recevied on port ${PORT}`)
+        connection.send(`Hey client received your message ${data.utf8Data} on ${PORT}`)
     })
 })
 
