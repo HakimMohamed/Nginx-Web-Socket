@@ -9,7 +9,7 @@ const httpServer = http.createServer();
 const websocketServer = new webSocketServer({ "httpServer": httpServer })
 
 const PORT = process.argv[2] || 8080; // pick the port passed in the env variables
-httpServer.listen(8080, () => console.log(`Listening on port ${PORT}`))
+httpServer.listen(PORT, () => console.log(`Listening on port ${PORT}`))
 
 let connection = null // global variable for full duplex connection
 websocketServer.on("request", request => {
